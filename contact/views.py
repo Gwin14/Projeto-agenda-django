@@ -21,6 +21,19 @@ def index(request):
     )
 
 
+def create(request):
+
+    context = {
+        'sitetitle': 'Criar - '
+    }
+
+    return render(
+        request,
+        'contact/create.html',
+        context=context
+    )
+
+
 def search(request):
 
     search_value = request.GET.get('q', '').strip()
