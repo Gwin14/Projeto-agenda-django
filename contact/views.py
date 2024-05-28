@@ -1,8 +1,17 @@
 from django.shortcuts import render, redirect
 from django.db.models import Q
 from contact.models import Contact
+from django import forms
 
 # Create your views here.
+
+
+class ContactForm(forms.ModelForm):
+    class Meta:
+        model = Contact
+        fields = (
+            'first_name', 'last_name', 'phone',
+        )
 
 
 def index(request):
@@ -23,8 +32,21 @@ def index(request):
 
 def create(request):
 
+    if request.method == 'POST':
+        context = {
+            'sitetitle': 'Criar - ',
+            'form': ContactForm(request.POST)
+        }
+
+        return render(
+            request,
+            'contact/create.html',
+            context=context
+        )
+
     context = {
-        'sitetitle': 'Criar - '
+        'sitetitle': 'Criar - ',
+        'form': ContactForm()
     }
 
     return render(
