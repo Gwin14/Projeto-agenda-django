@@ -1,17 +1,8 @@
 from django.shortcuts import render, redirect
 from django.db.models import Q
 from contact.models import Contact
-from django import forms
-
+from contact.forms import ContactForm
 # Create your views here.
-
-
-class ContactForm(forms.ModelForm):
-    class Meta:
-        model = Contact
-        fields = (
-            'first_name', 'last_name', 'phone',
-        )
 
 
 def index(request):
