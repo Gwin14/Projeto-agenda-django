@@ -24,10 +24,17 @@ def index(request):
 def create(request):
 
     if request.method == 'POST':
+
+        form = ContactForm(request.POST)
+
         context = {
             'sitetitle': 'Criar - ',
-            'form': ContactForm(request.POST)
+            'form': form
         }
+
+        if form.is_valid():
+            form.save()
+            return redirect('create')
 
         return render(
             request,
