@@ -7,5 +7,6 @@ urlpatterns = [
 
     # CRUD
     path('contact/detail/<int:contact_id>/', views.contact, name='contact'),
+    path('contact/update/<int:contact_id>/', views.update, name='update'),
     path('contact/create/', views.create, name='create'),
 ]

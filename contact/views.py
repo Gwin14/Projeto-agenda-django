@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.db.models import Q
 from contact.models import Contact
 from contact.forms import ContactForm
@@ -22,6 +23,7 @@ def index(request):
 
 
 def create(request):
+    form_action = reverse('create')
 
     if request.method == 'POST':
 
@@ -29,12 +31,13 @@ def create(request):
 
         context = {
             'sitetitle': 'Criar - ',
-            'form': form
+            'form': form,
+            'form_action': form_action,
         }
 
         if form.is_valid():
-            form.save()
-            return redirect('create')
+            contact = form.save()
+            return redirect('update', contact_id=contact.pk)
 
         return render(
             request,
@@ -45,6 +48,43 @@ def create(request):
     context = {
         'sitetitle': 'Criar - ',
         'form': ContactForm()
+    }
+
+    return render(
+        request,
+        'contact/create.html',
+        context=context
+    )
+
+
+def update(request, contact_id):
+    contact = Contact.objects.get(pk=contact_id, show=True)
+
+    form_action = reverse('update', args=(contact_id,))
+
+    if request.method == 'POST':
+
+        form = ContactForm(request.POST, instance=contact)
+
+        context = {
+            'sitetitle': 'Atualizar - ',
+            'form': form,
+            'form_action': form_action,
+        }
+
+        if form.is_valid():
+            contact = form.save()
+            return redirect('update', contact_id=contact.pk)
+
+        return render(
+            request,
+            'contact/create.html',
+            context=context
+        )
+
+    context = {
+        'sitetitle': 'Criar - ',
+        'form': ContactForm(instance=contact)
     }
 
     return render(
