@@ -94,6 +94,12 @@ def update(request, contact_id):
     )
 
 
+def delete(request, contact_id):
+    contact = Contact.objects.get(pk=contact_id, show=True)
+    contact.delete()
+    return redirect('index')
+
+
 def search(request):
 
     search_value = request.GET.get('q', '').strip()
