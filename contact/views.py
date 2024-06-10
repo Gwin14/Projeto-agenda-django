@@ -3,6 +3,7 @@ from django.urls import reverse
 from django.db.models import Q
 from contact.models import Contact
 from contact.forms import ContactForm
+from contact.forms import RegisterForm
 # Create your views here.
 
 
@@ -143,3 +144,21 @@ def contact(request, contact_id):
         'contact/contact.html',
         context=context
     )
+
+
+# USER FORMS
+
+def register(request):
+    form = RegisterForm()
+
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+
+    context = {
+        'form': form,
+    }
+
+    return render(request, 'contact/register.html', context=context)

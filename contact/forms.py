@@ -1,4 +1,5 @@
 from . import models
+from django.contrib.auth.forms import UserCreationForm
 from django import forms
 
 
@@ -16,3 +17,7 @@ class ContactForm(forms.ModelForm):
         fields = (
             'first_name', 'last_name', 'phone', 'email', 'description', 'category', 'picture',
         )
+
+
+class RegisterForm(UserCreationForm):
+    ...
