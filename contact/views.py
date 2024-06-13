@@ -7,6 +7,7 @@ from contact.forms import ContactForm
 from contact.forms import RegisterForm, RegisterUpdateForm
 
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.decorators import login_required
 from django.contrib import auth
 
 # Create your views here.
@@ -28,6 +29,7 @@ def index(request):
     )
 
 
+@login_required(login_url='login')
 def create(request):
     form_action = reverse('create')
 
@@ -63,6 +65,7 @@ def create(request):
     )
 
 
+@login_required(login_url='login')
 def update(request, contact_id):
     contact = Contact.objects.get(pk=contact_id, show=True)
 
@@ -100,6 +103,7 @@ def update(request, contact_id):
     )
 
 
+@login_required(login_url='login')
 def delete(request, contact_id):
     contact = Contact.objects.get(pk=contact_id, show=True)
     contact.delete()
@@ -192,11 +196,13 @@ def login_view(request):
     )
 
 
+@login_required(login_url='login')
 def logout_view(request):
     auth.logout(request)
     return redirect('login')
 
 
+@login_required(login_url='login')
 def user_update(request):
     form = RegisterUpdateForm(instance=request.user)
 
