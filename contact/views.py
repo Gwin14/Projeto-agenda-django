@@ -44,7 +44,9 @@ def create(request):
         }
 
         if form.is_valid():
-            contact = form.save()
+            contact = form.save(commit=False)
+            contact.owner = request.user
+            contact.save()
             return redirect('update', contact_id=contact.pk)
 
         return render(
@@ -67,7 +69,7 @@ def create(request):
 
 @login_required(login_url='login')
 def update(request, contact_id):
-    contact = Contact.objects.get(pk=contact_id, show=True)
+    contact = Contact.objects.get(pk=contact_id, show=True, owner=request.user)
 
     form_action = reverse('update', args=(contact_id,))
 
