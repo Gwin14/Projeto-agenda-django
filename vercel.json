@@ -1,13 +1,22 @@
 {
-    "builds": [{
-        "src": "project/wsgi.py",
-        "use": "@vercel/python",
-        "config": { "maxLambdaSize": "15mb", "runtime": "python3.9" }
-    }],
+    "builds": [
+      {
+        "src": "install_pg.sh",
+        "use": "@vercel/static-build"
+      },
+      {
+        "src": "manage.py",
+        "use": "@vercel/python"
+      }
+    ],
     "routes": [
-        {
-            "src": "/(.*)",
-            "dest": "project/wsgi.py"
-        }
-    ]
-}
+      {
+        "src": "/(.*)",
+        "dest": "manage.py"
+      }
+    ],
+    "scripts": {
+      "build": "./install_pg.sh && pip install --disable-pip-version-check --target . --upgrade -r requirements.txt"
+    }
+  }
+  
