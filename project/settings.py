@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-qpn(h@k+n%+m@0ew#5x+r2k+n@&hy@!^&rsxm69ctyl5sgaia-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.vercel.app']
 
 
 # Application definition
@@ -78,8 +78,11 @@ WSGI_APPLICATION = 'project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'Agenda',
+        'USER': 'postgres',
+        'PASSWORD': '(fabio14)',
+        'HOST': 'localhost',
     }
 }
 
